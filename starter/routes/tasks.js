@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router()
 
-const{getAllTasks,createTask,
+const{getAllTasks,
+    createTask,
     getTask,
     updateTask,
     deleteTask
