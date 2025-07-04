@@ -1,8 +1,16 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 
-const connectionString = 'mongodb+srv://Rajesh1842:Rajesh1842@nodeexpressproject.84o4dtd.mongodb.net/?retryWrites=true&w=majority&appName=NodeExpressProject'
+dotenv.config();
 
-mongoose
-.connect(connectionString)
-.then(()=>console.log('CONNECTED TO THE DB...'))
-.catch( (err)=>console.log(err))
+const connectDB = async () => {
+  try {
+    console.log("MONGO_URI:", process.env.MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("CONNECTED TO DB");
+  } catch (err) {
+    console.log("DB CONNECTION ERROR:", err.message);
+  }
+};
+
+module.exports = connectDB;

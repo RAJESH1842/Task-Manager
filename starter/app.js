@@ -1,17 +1,30 @@
-require('./db/connect')
-const express = require('express');
-const app = express()
-const routes = require('./routes/tasks')
+const express = require("express");
+const dotenv = require("dotenv");
+const connectDB = require("./db/connect");
+const Tasks = require("./routes/Tasks");
 
+dotenv.config();
 
-app.use(express.json())
-
-app.get('/', (req, res)=>{
-    res.send('Task Manager App')
-})
-
-app.use('/api/v1/tasks', routes)
-
+const app = express();
 const port = 3000;
 
-app.listen(port, console.log(`Server is listening on port ${port}...`))
+app.use(express.json());
+
+app.get("/hello", (req, res) => {
+  res.send("Task Manager App");
+});
+
+app.use("/api/v1/Tasks", Tasks);
+
+const start = async () => {
+  try {
+    await connectDB();
+    app.listen(port, () => {
+      console.log(`Server is listening on port ${port}...`);
+    });
+  } catch (error) {
+    console.log("Server failed to start:", error.message);
+  }
+};
+
+start();
